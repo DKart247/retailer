@@ -5,228 +5,230 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>DawaiKart Retailer Dashboard</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Poppins',sans-serif;background:#f4f8fb;color:#333;}
+
+header{
+background:#0a6cff;
+color:#fff;
+padding:15px 30px;
+display:flex;
+justify-content:space-between;
+align-items:center;
 }
 
-body {
-  display: flex;
-  background: #f4f6f9;
+header h1{font-size:20px;}
+
+.container{
+padding:30px;
 }
 
-/* Sidebar */
-.sidebar {
-  width: 240px;
-  height: 100vh;
-  background: #1e293b;
-  color: white;
-  padding: 20px;
-  position: fixed;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:20px;
+margin-bottom:30px;
 }
 
-.sidebar h2 {
-  margin-bottom: 30px;
+.card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-.sidebar a {
-  display: block;
-  color: #cbd5e1;
-  text-decoration: none;
-  margin: 15px 0;
-  transition: 0.3s;
+.kpi h3{
+font-size:14px;
+color:#777;
+margin-bottom:8px;
 }
 
-.sidebar a:hover {
-  color: white;
+.kpi h2{
+color:#0a6cff;
 }
 
-/* Main */
-.main {
-  margin-left: 240px;
-  padding: 30px;
-  width: 100%;
+.chart-container{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+margin-bottom:30px;
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.table-container{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+overflow-x:auto;
 }
 
-.cards {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 20px;
-  margin-top: 30px;
+table{
+width:100%;
+border-collapse:collapse;
 }
 
-.card {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
+th, td{
+padding:12px;
+text-align:left;
+border-bottom:1px solid #eee;
+font-size:14px;
 }
 
-.card h3 {
-  font-size: 14px;
-  color: #64748b;
+th{
+background:#f2f6ff;
 }
 
-.card h1 {
-  margin-top: 10px;
-  font-size: 24px;
+.status{
+padding:5px 10px;
+border-radius:20px;
+font-size:12px;
+color:white;
 }
 
-.charts {
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 20px;
-  margin-top: 30px;
-}
+.delivered{background:#28a745;}
+.pending{background:#ffc107;color:#333;}
+.cancelled{background:#dc3545;}
 
-.chart-box {
-  background: white;
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0px 4px 10px rgba(0,0,0,0.05);
-}
-
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
-}
-
-th, td {
-  padding: 12px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-th {
-  background: #f1f5f9;
+@media(max-width:768px){
+header{flex-direction:column;align-items:flex-start;}
 }
 </style>
 </head>
 
 <body>
 
-<div class="sidebar">
-  <h2>DawaiKart</h2>
-  <a href="#">Dashboard</a>
-  <a href="#">Orders</a>
-  <a href="#">Inventory</a>
-  <a href="#">Payments</a>
-  <a href="#">Reports</a>
-  <a href="#">Settings</a>
+<header>
+<h1>DawaiKart 24/7 – Retailer Dashboard (Demo)</h1>
+<div>Welcome, Retail Partner</div>
+</header>
+
+<div class="container">
+
+<!-- KPI CARDS -->
+<div class="grid">
+<div class="card kpi">
+<h3>Today's Sales</h3>
+<h2>₹12,450</h2>
 </div>
 
-<div class="main">
+<div class="card kpi">
+<h3>Total Orders</h3>
+<h2>86</h2>
+</div>
 
-  <div class="header">
-    <h1>Retailer Dashboard</h1>
-    <p>Welcome, Partner</p>
-  </div>
+<div class="card kpi">
+<h3>Pending Prescriptions</h3>
+<h2>14</h2>
+</div>
 
-  <!-- KPI Cards -->
-  <div class="cards">
-    <div class="card">
-      <h3>Today's Orders</h3>
-      <h1>128</h1>
-    </div>
-    <div class="card">
-      <h3>Monthly Revenue</h3>
-      <h1>₹1,85,000</h1>
-    </div>
-    <div class="card">
-      <h3>Pending Deliveries</h3>
-      <h1>18</h1>
-    </div>
-    <div class="card">
-      <h3>Stock Alerts</h3>
-      <h1>5</h1>
-    </div>
-  </div>
+<div class="card kpi">
+<h3>Low Stock Alerts</h3>
+<h2>7</h2>
+</div>
+</div>
 
-  <!-- Charts -->
-  <div class="charts">
-    <div class="chart-box">
-      <h3>Sales Overview</h3>
-      <canvas id="salesChart"></canvas>
-    </div>
-    <div class="chart-box">
-      <h3>Order Distribution</h3>
-      <canvas id="pieChart"></canvas>
-    </div>
-  </div>
+<!-- SALES TREND -->
+<div class="chart-container">
+<h3>Weekly Revenue Trend</h3>
+<canvas id="salesChart"></canvas>
+</div>
 
-  <!-- Recent Orders -->
-  <div class="chart-box">
-    <h3>Recent Orders</h3>
-    <table>
-      <tr>
-        <th>Order ID</th>
-        <th>Medicine</th>
-        <th>Status</th>
-        <th>Amount</th>
-      </tr>
-      <tr>
-        <td>#DK101</td>
-        <td>Paracetamol</td>
-        <td>Delivered</td>
-        <td>₹450</td>
-      </tr>
-      <tr>
-        <td>#DK102</td>
-        <td>Insulin</td>
-        <td>Pending</td>
-        <td>₹1,200</td>
-      </tr>
-      <tr>
-        <td>#DK103</td>
-        <td>Azithromycin</td>
-        <td>Processing</td>
-        <td>₹780</td>
-      </tr>
-    </table>
-  </div>
+<!-- CATEGORY SALES -->
+<div class="grid">
+<div class="chart-container">
+<h3>Category Performance</h3>
+<canvas id="categoryChart"></canvas>
+</div>
+
+<div class="chart-container">
+<h3>Order Status Distribution</h3>
+<canvas id="statusChart"></canvas>
+</div>
+</div>
+
+<!-- RECENT ORDERS TABLE -->
+<div class="table-container">
+<h3>Recent Orders</h3>
+<br>
+<table>
+<thead>
+<tr>
+<th>Order ID</th>
+<th>Customer</th>
+<th>Amount</th>
+<th>Status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>#DK1021</td>
+<td>Rahul Sharma</td>
+<td>₹350</td>
+<td><span class="status delivered">Delivered</span></td>
+</tr>
+<tr>
+<td>#DK1022</td>
+<td>Anita Patel</td>
+<td>₹1,200</td>
+<td><span class="status pending">Pending</span></td>
+</tr>
+<tr>
+<td>#DK1023</td>
+<td>Vikram Rao</td>
+<td>₹540</td>
+<td><span class="status cancelled">Cancelled</span></td>
+</tr>
+</tbody>
+</table>
+</div>
 
 </div>
 
 <script>
-const ctx = document.getElementById('salesChart').getContext('2d');
-new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-        datasets: [{
-            label: 'Sales (₹)',
-            data: [12000, 15000, 10000, 18000, 22000, 17000, 25000],
-            borderColor: '#3b82f6',
-            backgroundColor: 'rgba(59,130,246,0.2)',
-            fill: true,
-            tension: 0.4
-        }]
-    }
+// Sales Line Chart
+new Chart(document.getElementById('salesChart'), {
+type: 'line',
+data: {
+labels: ['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+datasets: [{
+label: 'Revenue (₹)',
+data: [8500, 9200, 7800, 10500, 12450, 9900, 14000],
+borderColor: '#0a6cff',
+backgroundColor: 'rgba(10,108,255,0.1)',
+fill: true,
+tension: 0.4
+}]
+}
 });
 
-const pie = document.getElementById('pieChart').getContext('2d');
-new Chart(pie, {
-    type: 'doughnut',
-    data: {
-        labels: ['OTC', 'Prescription', 'Emergency'],
-        datasets: [{
-            data: [40, 45, 15],
-            backgroundColor: ['#3b82f6', '#10b981', '#f59e0b']
-        }]
-    }
+// Category Bar Chart
+new Chart(document.getElementById('categoryChart'), {
+type: 'bar',
+data: {
+labels: ['Prescription','OTC','Devices','Personal Care'],
+datasets: [{
+label: 'Sales (₹)',
+data: [45000, 28000, 15000, 22000],
+backgroundColor: '#00c6ff'
+}]
+}
+});
+
+// Status Doughnut Chart
+new Chart(document.getElementById('statusChart'), {
+type: 'doughnut',
+data: {
+labels: ['Delivered','Pending','Cancelled'],
+datasets: [{
+data: [60, 20, 6],
+backgroundColor: ['#28a745','#ffc107','#dc3545']
+}]
+}
 });
 </script>
 
