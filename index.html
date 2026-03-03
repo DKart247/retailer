@@ -3,30 +3,90 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>DawaiKart Retailer Dashboard</title>
+<title>DawaiKart 24/7 – Retailer Portal</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{font-family:'Poppins',sans-serif;background:#f4f8fb;color:#333;}
-
-header{
-background:#0a6cff;
-color:#fff;
-padding:15px 30px;
-display:flex;
-justify-content:space-between;
-align-items:center;
+:root{
+--primary:#0a6cff;
+--bg:#f4f8fb;
+--card:#ffffff;
+--text:#333;
+--shadow:0 4px 12px rgba(0,0,0,0.08);
 }
 
-header h1{font-size:20px;}
+body.dark{
+--bg:#0f172a;
+--card:#1e293b;
+--text:#f1f5f9;
+--shadow:0 4px 12px rgba(0,0,0,0.4);
+}
 
-.container{
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+font-family:'Poppins',sans-serif;
+background:var(--bg);
+color:var(--text);
+display:flex;
+transition:0.3s;
+}
+
+/* SIDEBAR */
+.sidebar{
+width:230px;
+height:100vh;
+background:var(--primary);
+color:white;
+padding:25px;
+position:fixed;
+transition:0.3s;
+}
+
+.sidebar h2{
+margin-bottom:30px;
+font-size:20px;
+}
+
+.sidebar a{
+display:block;
+color:white;
+text-decoration:none;
+margin:15px 0;
+opacity:0.85;
+transition:0.3s;
+}
+
+.sidebar a:hover{
+opacity:1;
+padding-left:5px;
+}
+
+/* MAIN */
+.main{
+margin-left:230px;
+width:100%;
 padding:30px;
 }
 
+header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:30px;
+}
+
+.toggle-btn{
+background:var(--primary);
+color:white;
+border:none;
+padding:8px 14px;
+border-radius:6px;
+cursor:pointer;
+}
+
+/* GRID */
 .grid{
 display:grid;
 grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
@@ -35,35 +95,43 @@ margin-bottom:30px;
 }
 
 .card{
-background:white;
+background:var(--card);
 padding:20px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
+border-radius:12px;
+box-shadow:var(--shadow);
+transition:0.3s;
+}
+
+.card:hover{
+transform:translateY(-5px);
 }
 
 .kpi h3{
 font-size:14px;
-color:#777;
-margin-bottom:8px;
+opacity:0.7;
+margin-bottom:10px;
 }
 
 .kpi h2{
-color:#0a6cff;
+color:var(--primary);
+font-size:26px;
 }
 
+/* CHART */
 .chart-container{
-background:white;
+background:var(--card);
 padding:20px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
+border-radius:12px;
+box-shadow:var(--shadow);
 margin-bottom:30px;
 }
 
+/* TABLE */
 .table-container{
-background:white;
+background:var(--card);
 padding:20px;
-border-radius:10px;
-box-shadow:0 4px 12px rgba(0,0,0,0.08);
+border-radius:12px;
+box-shadow:var(--shadow);
 overflow-x:auto;
 }
 
@@ -74,13 +142,8 @@ border-collapse:collapse;
 
 th, td{
 padding:12px;
-text-align:left;
 border-bottom:1px solid #eee;
 font-size:14px;
-}
-
-th{
-background:#f2f6ff;
 }
 
 .status{
@@ -94,68 +157,75 @@ color:white;
 .pending{background:#ffc107;color:#333;}
 .cancelled{background:#dc3545;}
 
+.search-box{
+margin-bottom:15px;
+padding:8px;
+width:250px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+/* Responsive */
 @media(max-width:768px){
-header{flex-direction:column;align-items:flex-start;}
+.sidebar{display:none;}
+.main{margin-left:0;}
 }
 </style>
 </head>
 
 <body>
 
-<header>
-<h1>DawaiKart 24/7 – Retailer Dashboard (Demo)</h1>
-<div>Welcome, Retail Partner</div>
-</header>
+<div class="sidebar">
+<h2>DawaiKart 24/7</h2>
+<a href="#">Dashboard</a>
+<a href="#">Orders</a>
+<a href="#">Inventory</a>
+<a href="#">Payments</a>
+<a href="#">Reports</a>
+<a href="#">Settings</a>
+</div>
 
-<div class="container">
+<div class="main">
+
+<header>
+<h1>Retailer Dashboard</h1>
+<button class="toggle-btn" onclick="toggleMode()">Dark Mode</button>
+</header>
 
 <!-- KPI CARDS -->
 <div class="grid">
 <div class="card kpi">
 <h3>Today's Sales</h3>
-<h2>₹12,450</h2>
+<h2 id="salesCounter">0</h2>
 </div>
 
 <div class="card kpi">
 <h3>Total Orders</h3>
-<h2>86</h2>
+<h2 id="ordersCounter">0</h2>
 </div>
 
 <div class="card kpi">
 <h3>Pending Prescriptions</h3>
-<h2>14</h2>
+<h2 id="pendingCounter">0</h2>
 </div>
 
 <div class="card kpi">
 <h3>Low Stock Alerts</h3>
-<h2>7</h2>
+<h2 id="stockCounter">0</h2>
 </div>
 </div>
 
-<!-- SALES TREND -->
+<!-- CHART -->
 <div class="chart-container">
 <h3>Weekly Revenue Trend</h3>
 <canvas id="salesChart"></canvas>
 </div>
 
-<!-- CATEGORY SALES -->
-<div class="grid">
-<div class="chart-container">
-<h3>Category Performance</h3>
-<canvas id="categoryChart"></canvas>
-</div>
-
-<div class="chart-container">
-<h3>Order Status Distribution</h3>
-<canvas id="statusChart"></canvas>
-</div>
-</div>
-
-<!-- RECENT ORDERS TABLE -->
+<!-- TABLE -->
 <div class="table-container">
 <h3>Recent Orders</h3>
-<br>
-<table>
+<input type="text" class="search-box" placeholder="Search customer..." onkeyup="searchTable(this.value)">
+<table id="ordersTable">
 <thead>
 <tr>
 <th>Order ID</th>
@@ -174,7 +244,7 @@ header{flex-direction:column;align-items:flex-start;}
 <tr>
 <td>#DK1022</td>
 <td>Anita Patel</td>
-<td>₹1,200</td>
+<td>₹1200</td>
 <td><span class="status pending">Pending</span></td>
 </tr>
 <tr>
@@ -190,7 +260,32 @@ header{flex-direction:column;align-items:flex-start;}
 </div>
 
 <script>
-// Sales Line Chart
+// DARK MODE
+function toggleMode(){
+document.body.classList.toggle("dark");
+}
+
+// Animated Counter
+function animateCounter(id, target){
+let count = 0;
+let increment = target/100;
+let interval = setInterval(()=>{
+count += increment;
+if(count >= target){
+count = target;
+clearInterval(interval);
+}
+document.getElementById(id).innerText = 
+id==="salesCounter" ? "₹"+Math.floor(count) : Math.floor(count);
+},20);
+}
+
+animateCounter("salesCounter",12450);
+animateCounter("ordersCounter",86);
+animateCounter("pendingCounter",14);
+animateCounter("stockCounter",7);
+
+// Chart
 new Chart(document.getElementById('salesChart'), {
 type: 'line',
 data: {
@@ -203,33 +298,19 @@ backgroundColor: 'rgba(10,108,255,0.1)',
 fill: true,
 tension: 0.4
 }]
+},
+options:{
+animation:{duration:1500}
 }
 });
 
-// Category Bar Chart
-new Chart(document.getElementById('categoryChart'), {
-type: 'bar',
-data: {
-labels: ['Prescription','OTC','Devices','Personal Care'],
-datasets: [{
-label: 'Sales (₹)',
-data: [45000, 28000, 15000, 22000],
-backgroundColor: '#00c6ff'
-}]
-}
+// Search Table
+function searchTable(value){
+let rows = document.querySelectorAll("#ordersTable tbody tr");
+rows.forEach(row=>{
+row.style.display = row.innerText.toLowerCase().includes(value.toLowerCase()) ? "" : "none";
 });
-
-// Status Doughnut Chart
-new Chart(document.getElementById('statusChart'), {
-type: 'doughnut',
-data: {
-labels: ['Delivered','Pending','Cancelled'],
-datasets: [{
-data: [60, 20, 6],
-backgroundColor: ['#28a745','#ffc107','#dc3545']
-}]
 }
-});
 </script>
 
 </body>
